@@ -1,14 +1,17 @@
 package th.ac.udru.pookka.udrufriend;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +21,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 
 /**
@@ -89,8 +98,51 @@ public class RegisterFragment extends Fragment {
 
     }
 
-    private void uploadtoFirebase(String nameString, String emailString, String passwordString, String telString) {
+    private void uploadtoFirebase(final String nameString, String emailString, String passwordString, String telString) {
 
+        // add progress dialog
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Please wait...");
+        progressDialog.show();
+
+        //        upload image
+
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        StorageReference storageReference = firebaseStorage.getReference();
+        StorageReference storageReference1 = storageReference.child("avatar/" + nameString);
+        storageReference1.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                Toast.makeText(getActivity(), "Upload Success", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+
+                //        register email
+                String urlAvatar = findURLavatar(nameString);
+                Log.d("20novV1","urlAvatar ==>" + urlAvatar)
+
+
+
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                Toast.makeText(getActivity(), "Cannot upload", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        });
+
+
+
+
+    }   //upload
+
+    private String findURLavatar(String nameString) {
+
+
+        return nameString;
     }
 
     private boolean checkSpace(String nameString,
@@ -123,6 +175,8 @@ public class RegisterFragment extends Fragment {
         if (resultCode == getActivity().RESULT_OK) {
 
             uri = data.getData();
+            aBoolean = false;
+
             try {
                 Bitmap bitmap = BitmapFactory.decodeStream(getActivity()
                         .getContentResolver()
@@ -150,7 +204,7 @@ public class RegisterFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
-                startActivityForResult(Intent.createChooser(intent, "Please select 5 pics"), 5);
+                startActivityForResult(Intent.createChooser(intent, "Please select "), 5);
             }
         });
     } // open app to choose pic
