@@ -39,6 +39,7 @@
             android:src="@drawable/avartar" />
         <!--name-->
         <EditText
+            android:id="@+id/edtName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Firstname FamilyName"
@@ -46,6 +47,7 @@
 
         <!--email-->
         <EditText
+            android:id="@+id/edtMail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/MarginTop"
@@ -53,6 +55,7 @@
             android:inputType="textEmailAddress" />
         <!--password-->
         <EditText
+            android:id="@+id/edtPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/MarginTop"
@@ -60,6 +63,7 @@
             android:inputType="textPassword" />
         <!--confirm password-->
         <EditText
+            android:id="@+id/edtRePassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/MarginTop"
@@ -67,17 +71,14 @@
             android:inputType="textPassword" />
 
         <EditText
+            android:id="@+id/edtTel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/MarginTop"
             android:hint="Telephone Number :"
             android:inputType="number" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/MarginTop"
-            android:text="Register" />
+
 
     </LinearLayout>
 
