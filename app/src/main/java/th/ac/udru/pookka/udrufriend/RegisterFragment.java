@@ -119,7 +119,7 @@ public class RegisterFragment extends Fragment {
 
                 //        register email
                 String urlAvatar = findURLavatar(nameString);
-                Log.d("20novV1","urlAvatar ==>" + urlAvatar)
+                Log.d("20nov1", "urlAvatar ==>" + urlAvatar);
 
 
 
@@ -142,6 +142,26 @@ public class RegisterFragment extends Fragment {
     private String findURLavatar(String nameString) {
 
 
+
+        return myFindUrl(nameString);
+    }
+
+    private String myFindUrl(String nameString) {
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        StorageReference storageReference = firebaseStorage.getReference();
+
+        final String[] strings = new String[1];
+        storageReference.child("Avatar").child(nameString)
+                .getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+
+                        strings[0] = uri.toString();
+                        return;
+
+                    }
+                });
         return nameString;
     }
 
