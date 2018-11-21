@@ -32,20 +32,36 @@
 
     <!--drawer-->
     <LinearLayout
+
         android:layout_gravity="start"
         android:orientation="vertical"
         android:background="#ffffff"
         android:layout_width="320dp"
         android:layout_height="match_parent">
 
-        <TextView
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            android:text="Drawer Menu"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/h1"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <ImageView
+                android:src="@drawable/headprofile"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="150dp" />
+
+            <TextView
+                android:layout_marginRight="5dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="80dp"
+                android:text="Drawer Menu"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/h1"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+
 
         <ListView
             android:id="@+id/listviewMenu"
