@@ -34,102 +34,95 @@ import com.google.firebase.storage.UploadTask;
  */
 public class RegisterFragment extends Fragment {
 
-//    Explicit
-
+    //    Explicit
     private Uri uri;
     private ImageView imageView;
     private boolean aBoolean = true;
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-//        create toolbar
+//        Create Toolbar
         createToolbar();
 
-//        avatar controller
-        avatarController();
+//        Avata Controller
+        avataController();
 
-    }   // main Method
+
+    }   // Main Method
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.itemUpload) {
 
-            checkData();
+            cheackData();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void checkData() {
+    private void cheackData() {
 
         MyAlert myAlert = new MyAlert(getActivity());
 
-//        Get value from edit text to getString()
+//        Get Value From EditText to String
         EditText nameEditText = getView().findViewById(R.id.edtName);
         EditText emailEditText = getView().findViewById(R.id.edtMail);
         EditText passwordEditText = getView().findViewById(R.id.edtPassword);
-        EditText repasswordEditText = getView().findViewById(R.id.edtRePassword);
-        EditText telEditText = getView().findViewById(R.id.edtTel);
+        EditText rePasswordEditText = getView().findViewById(R.id.edtRePassword);
 
         String nameString = nameEditText.getText().toString().trim();
         String emailString = emailEditText.getText().toString().trim();
         String passwordString = passwordEditText.getText().toString().trim();
-        String repasswordString = repasswordEditText.getText().toString().trim();
-        String telString = telEditText.getText().toString().trim();
-
+        String rePasswordString = rePasswordEditText.getText().toString().trim();
 
         if (aBoolean) {
-            myAlert.normalDialog("No Avatar", "Please choose image");
-        } else if (checkSpace(nameString, emailString, passwordString, repasswordString, telString)) {
+            myAlert.normalDialog("No Avata", "Please Choose Image for Avata");
+        } else if (checkSpace(nameString, emailString, passwordString, rePasswordString)) {
             myAlert.normalDialog(getString(R.string.title_have_space), getString(R.string.message_have_space));
-        } else if (passwordString.equals(repasswordString)) {
-
-            uploadtoFirebase(nameString, emailString, passwordString,telString);
+        } else if (passwordString.equals(rePasswordString)) {
+//            Password Math
+            uploadToFirebase(nameString, emailString, passwordString);
         } else {
-            myAlert.normalDialog("Password not match", "Please type same password");
-
+            myAlert.normalDialog("Password Not Math", "Please Type Password agains");
         }
-
 
     }
 
-    private void uploadtoFirebase(final String nameString, String emailString, String passwordString, String telString) {
 
-        // add progress dialog
+    private void uploadToFirebase(final String nameString, String emailString, String passwordString) {
+
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setTitle("Please wait...");
+        progressDialog.setTitle("Please Wait...");
         progressDialog.show();
 
-        //        upload image
-
+//        upload Image
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         StorageReference storageReference = firebaseStorage.getReference();
-        StorageReference storageReference1 = storageReference.child("avatar/" + nameString);
+        StorageReference storageReference1 = storageReference.child("Avata/" + nameString);
         storageReference1.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                Toast.makeText(getActivity(), "Upload Success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Success Upload", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
 
-                //        register email
-                String urlAvatar = findURLavatar(nameString);
-                Log.d("20nov1", "urlAvatar ==>" + urlAvatar);
+                //        Register Email
+                String urlAvata = findURlavata(nameString);
+                Log.d("20novV1", "urlAvata ==> " + urlAvata);
 
 
 
 
-            }
+
+            }   // onSuccess
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-
-                Toast.makeText(getActivity(), "Cannot upload", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Cannot Upload", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
         });
@@ -137,21 +130,22 @@ public class RegisterFragment extends Fragment {
 
 
 
-    }   //upload
-
-    private String findURLavatar(String nameString) {
 
 
+    }   // upload
 
-        return myFindUrl(nameString);
+    private String findURlavata(String nameString) {
+
+
+        return myFindURL(nameString);
     }
 
-    private String myFindUrl(String nameString) {
+    private String myFindURL(String nameString) {
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         StorageReference storageReference = firebaseStorage.getReference();
 
         final String[] strings = new String[1];
-        storageReference.child("Avatar").child(nameString)
+        storageReference.child("Avata").child(nameString)
                 .getDownloadUrl()
                 .addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
@@ -162,22 +156,21 @@ public class RegisterFragment extends Fragment {
 
                     }
                 });
-        return nameString;
+        return strings[0];
     }
 
     private boolean checkSpace(String nameString,
                                String emailString,
                                String passwordString,
-                               String repasswordString,
-                               String telString) {
-        boolean result = false;
-        if (nameString.isEmpty() || emailString.isEmpty() || passwordString.isEmpty() || repasswordString.isEmpty() || telString.isEmpty()) {
-            result = true;
+                               String rePasswordString) {
 
+        boolean result = false;
+
+        if (nameString.isEmpty() || emailString.isEmpty() || passwordString.isEmpty() || rePasswordString.isEmpty()) {
+            result = true;
         }
 
-
-        return false;
+        return result;
     }
 
     @Override
@@ -191,50 +184,51 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        resultcode is either true or false
+
         if (resultCode == getActivity().RESULT_OK) {
 
             uri = data.getData();
             aBoolean = false;
 
             try {
-                Bitmap bitmap = BitmapFactory.decodeStream(getActivity()
-                        .getContentResolver()
-                        .openInputStream(uri)); //draw image, large, used up lots of memories
+
+                Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(uri));
                 Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap, 800, 600, false);
-                //scale image into another image
                 imageView.setImageBitmap(bitmap1);
 
             } catch (Exception e) {
-                e.printStackTrace(); //
+                e.printStackTrace();
             }
 
+
         } else {
-            Toast.makeText(getActivity(), "Please choose image", Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(getActivity(),
+                    "Please Choose Image",
+                    Toast.LENGTH_SHORT).show();
         }
-
 
     }   // Result
 
-    private void avatarController() {
+    private void avataController() {
         imageView = getView().findViewById(R.id.imageViewAvartar);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
-                startActivityForResult(Intent.createChooser(intent, "Please select "), 5);
+                startActivityForResult(Intent.createChooser(intent,
+                        "Please Choose App and Image"), 5);
+
             }
         });
-    } // open app to choose pic
+    }
 
     private void createToolbar() {
-
         Toolbar toolbar = getView().findViewById(R.id.toolbarRegister);
         ((MainActivity) getActivity()).setSupportActionBar(toolbar);
         ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.register);
-        ((MainActivity) getActivity()).getSupportActionBar().setSubtitle(R.string.title_have_space);
+        ((MainActivity) getActivity()).getSupportActionBar().setSubtitle(R.string.message_have_space);
         ((MainActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -245,6 +239,7 @@ public class RegisterFragment extends Fragment {
         });
 
         setHasOptionsMenu(true);
+
     }
 
     public RegisterFragment() {
