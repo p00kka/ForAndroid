@@ -6,6 +6,8 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.wifi.WifiManager;
+import android.support.annotation.LongDef;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -23,7 +25,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private LocationManager locationManager;
     private Criteria criteria;
-    private Double latDouble, longDouble;
+    private Double latDouble = 0.0, longDouble = 0.0;
+
 
 
     @Override
@@ -72,8 +75,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d("22noV2", "lat ==>" + latDouble);
         Log.d("22noV2", "long ===>" + longDouble);
 
+        if (latDouble != 0) {
+            createMarker(latDouble, longDouble);
+        }
+
 
     }
+
+    private void createMarker(Double latDouble, Double longDouble) {
+
+        try {
+
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(new LatLng(latDouble, longDouble));
+            mMap.addMarker(markerOptions);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        }
 
     public Location findMylocation(String providerString) {
 
