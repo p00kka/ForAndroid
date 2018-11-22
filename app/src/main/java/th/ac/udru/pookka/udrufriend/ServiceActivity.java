@@ -17,6 +17,8 @@ import android.widget.ListView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Map;
+
 public class ServiceActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
@@ -34,12 +36,16 @@ public class ServiceActivity extends AppCompatActivity {
 //        create listview
         createListview();
 
+//        addFragment(savedInstanceState);
+
+    } // main method
+
+    private void addFragment(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.layoutMainFragment, new RegisterFragment());
         }
-
-    } // main method
+    }
 
     private void createListview() {
         ListView listView = findViewById(R.id.listviewMenu);
@@ -53,9 +59,11 @@ public class ServiceActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.layoutServiceFragement, new ServiceFragment()).commit();
                         break;
                     case 1:
+                        startActivity( new Intent(ServiceActivity.this, MapsActivity.class));
                         break;
                     case 2:
                         break;

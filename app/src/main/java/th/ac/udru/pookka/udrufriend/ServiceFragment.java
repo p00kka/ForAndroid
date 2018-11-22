@@ -6,11 +6,14 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,7 +45,11 @@ public class ServiceFragment extends Fragment {
     }
 
     private void createRecyclerview() {
-        RecyclerView recyclerView = getView().findViewById(R.id.recycleViewFriend);
+        final RecyclerView recyclerView = getView().findViewById(R.id.recycleViewFriend);
+
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(staggeredGridLayoutManager);
+
         final String tag = "22noV1";
 
         final int[] countInts = new int[]{0};
@@ -76,6 +83,9 @@ public class ServiceFragment extends Fragment {
 
                 Log.d(tag, "displaynamearraylist ===>" + displayNameArrayList.toString());
                 Log.d(tag, "urlAvatarArraylist ====>" + urlAvatarArrayList.toString());
+
+                FriendAdaptor friendAdaptor = new FriendAdaptor(getActivity(), displayNameArrayList, urlAvatarArrayList);
+                recyclerView.setAdapter(friendAdaptor);
 
             } // on data change
 

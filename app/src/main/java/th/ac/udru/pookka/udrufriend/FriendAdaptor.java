@@ -45,7 +45,10 @@ public class FriendAdaptor extends RecyclerView.Adapter<FriendAdaptor.FriendView
         String displayNameString = displayNamestringArrayList.get(i);
 
         friendViewHolder.textView.setText(displayNameString);
-        Picasso.get().load(urlPathString).into(friendViewHolder.circleImageView);
+        Picasso.get()
+                .load(urlPathString)
+                .resize(100,10).
+                into(friendViewHolder.circleImageView);
     }
 
     @Override
