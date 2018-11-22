@@ -22,7 +22,7 @@
         <!--user-->
         <EditText
             android:textSize="@dimen/h3"
-            android:background="@drawable/groupemail9"
+            android:background="@drawable/groupemail19"
             android:id="@+id/edtMail"
             android:inputType="textEmailAddress"
             android:hint="@string/email"
