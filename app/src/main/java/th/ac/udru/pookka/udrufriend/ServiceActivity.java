@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,6 +42,25 @@ public class ServiceActivity extends AppCompatActivity {
         DrawerMenuAdaptor drawerMenuAdaptor = new DrawerMenuAdaptor(ServiceActivity.this,
                myconstant.getIconInts(),myconstant.getTitleStrings() );
         listView.setAdapter(drawerMenuAdaptor);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        signOutService();
+                                              break;
+                }
+                drawerLayout.closeDrawers();
+            }
+        });
     }
 
 
