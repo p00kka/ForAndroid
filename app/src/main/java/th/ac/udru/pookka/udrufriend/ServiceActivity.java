@@ -36,14 +36,14 @@ public class ServiceActivity extends AppCompatActivity {
 //        create listview
         createListview();
 
-//        addFragment(savedInstanceState);
+        addFragment(savedInstanceState);
 
     } // main method
 
     private void addFragment(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.layoutMainFragment, new RegisterFragment());
+                    .add(R.id.layoutServiceFragement, new ServiceFragment()).commit();
         }
     }
 
@@ -66,6 +66,8 @@ public class ServiceActivity extends AppCompatActivity {
                         startActivity( new Intent(ServiceActivity.this, MapsActivity.class));
                         break;
                     case 2:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.layoutServiceFragement, new InfoFragment()).commit();
                         break;
                     case 3:
                         signOutService();

@@ -54,7 +54,7 @@ public class RegisterFragment extends Fragment {
 //        Create Toolbar
         createToolbar();
 
-//        Avata Controller
+//        Avatar Controller
         avataController();
 
 

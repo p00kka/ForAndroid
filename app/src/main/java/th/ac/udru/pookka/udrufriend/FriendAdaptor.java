@@ -20,6 +20,9 @@ public class FriendAdaptor extends RecyclerView.Adapter<FriendAdaptor.FriendView
     private ArrayList<String> displayNamestringArrayList, pathURLStringArrayList;
     private LayoutInflater layoutInflater;
 
+    private OnClickItem onClickItem;
+
+
     public FriendAdaptor(Context context,
                          ArrayList<String> displayNamestringArrayList,
                          ArrayList<String> pathURLStringArrayList) {
@@ -47,8 +50,8 @@ public class FriendAdaptor extends RecyclerView.Adapter<FriendAdaptor.FriendView
         friendViewHolder.textView.setText(displayNameString);
         Picasso.get()
                 .load(urlPathString)
-                .resize(100,10).
-                into(friendViewHolder.circleImageView);
+                .resize(100,10)
+                .into(friendViewHolder.circleImageView);
     }
 
     @Override
