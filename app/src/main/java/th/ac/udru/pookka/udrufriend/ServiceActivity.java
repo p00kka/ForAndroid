@@ -56,7 +56,7 @@ public class ServiceActivity extends AppCompatActivity {
                         break;
                     case 3:
                         signOutService();
-                                              break;
+                        break;
                 }
                 drawerLayout.closeDrawers();
             }
